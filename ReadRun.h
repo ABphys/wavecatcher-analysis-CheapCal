@@ -139,11 +139,15 @@ public:
 	int* GetIntWindow(TH1F*, float, float, float, float, int);
 	void PrintChargeSpectrumWF(float, float, float = 0, float = 300, int = 1, float = 0., float = 0.);
 	TH1F* ChargeSpectrum(int, float, float, float = 0, float = 300, float = -50, float = 600, int = 750, string = "width");
+	TH1F* AmplitudeSpectrum(int, float, float, float = 0, float = 300, float = -50, float = 600, int = 750, string = "width");
 	void PrintChargeSpectrum(float, float, float = 0, float = 300, float = -50, float = 600, int = 750, float = 0., float = 0., int = 8, int = 0);
+	void PrintChargeSpectrum(string, string, float, float, float = 0, float = 300, float = -50, float = 600, int = 750, float = 0., float = 0., int = 8, int = 0);//overloading for option to save plots
 	vector<float> PrintChargeSpectrum_pars;
 	void PrintChargeSpectrumPMT(float, float, float = 0, float = 300, float = -50, float = 600, int = 750);
 	vector<float> PrintChargeSpectrumPMT_pars;
 	void PrintChargeSpectrumPMTthreshold(float, float, float = 0, float = 300, float = -50, float = 600, int = 750, double = 4);
+	void PrintChargeSpectrumPMTthreshold(string, string, float, float, float = 0, float = 300, float = -50, float = 600, int = 750, double = 4);//overloading for option to save plots
+	void PrintAmplitudeSpectrum(string, string, float, float, float = 0, float = 300, float = -50, float = 600, int = 750, float = 0., float = 0., int = 8, int = 0);
 
 	// functions for time distribution
 	TH1F* TimeDist(int, float = 0, float = 300, float = 0, float = 300, int = 100, int = 0);
@@ -191,6 +195,8 @@ public:
 	vector<int> plot_active_channels; // stores the numbers of the active channels which should be plotted
 
 	vector<TFitResultPtr> fit_results; // stores the fit results of all channels and all function calls in ascending order for all different PrintChargeSpectrum functions
+	vector<double> darkcount_results;
+	vector<double> amplitude_results;
 
 	vector<bool> skip_event; // stores the events which should be skipped in the analysis
 	double skip_event_threshold; // threshold (usually 4 mV) for PMT signal (hardcoded channel >8) to skip events where PMTs pick up radio frequency noise (NO BASELINE CORRECTION!)
