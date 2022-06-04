@@ -87,8 +87,11 @@ void readout(int which) // main
 	ReadRun mymeas(0);
 
 	// read data
-	mymeas.ReadFile(path_to_data, true, 0, "/home/marte/software/wavecatcher-analysis-main/Results/" +folder + "/" + dataname+ ".root"); // saves root output in the datafolder as results.root
-
+	// Alessia saving root file
+	//mymeas.ReadFile(path_to_data, true, 0, "/home/marte/software/wavecatcher-analysis-main/Results/" +folder + "/" + dataname+ ".root");  
+	// Ben saving root file 
+        mymeas.ReadFile(path_to_data, true, 0, path_to_data+ "/results.root"); // saves root output in the datafolder as results.root 
+	
 	// only plot certain channels
 	mymeas.plot_active_channels = {0,1};
 
