@@ -1374,13 +1374,13 @@ void ReadRun::PrintChargeSpectrumPMTthreshold(float windowlow, float windowhi, f
 			his->GetXaxis()->SetTitle("amplitude in mV");
 			if (windowlow != windowhi) {
 				his->GetXaxis()->SetTitle("integral in mV#timesns");
+				his->GetXaxis()->SetTitle("integral in mV#timesns");
 				unit = " mV#timesns";
 			}
 
 			chargec->cd(current_canvas);
 
 			his->GetYaxis()->SetTitle("#Entries");
-			his->GetXaxis()->SetTitle("integral in mV#timesns");
 			his->Draw();
 			stringstream allname; allname << his->GetEntries() << " entries";
 			his->SetTitle(allname.str().c_str());
@@ -1394,7 +1394,7 @@ void ReadRun::PrintChargeSpectrumPMTthreshold(float windowlow, float windowhi, f
 			stringstream lonamefrac;
 			stringstream lonamerate;
 			lonamefrac << 100. * his->Integral(his->GetXaxis()->FindBin(rangestart), his->GetXaxis()->FindBin(threshold)) / his->GetEntries() << "% <= " << threshold << unit;
-			lonamerate << "<0.5 pe=" << threshold/(windowhi-windowlow) << unit << " -> " << his->Integral(his->GetXaxis()->FindBin(rangestart), his->GetXaxis()->FindBin(threshold)) / his->GetEntries() / (1.e-3 * (end - start)) << " MHz";
+			lonamerate << "<0.5 pe=" << threshold << unit << " -> " << his->Integral(his->GetXaxis()->FindBin(rangestart), his->GetXaxis()->FindBin(threshold)) / his->GetEntries() / (1.e-3 * (end - start)) << " MHz";
 			cout << "\n" << lonamerate.str().c_str() << endl;
 			cout << "\n" << lonamefrac.str().c_str() << endl;
 			his_lo->SetTitle(lonamerate.str().c_str());
@@ -1409,7 +1409,7 @@ void ReadRun::PrintChargeSpectrumPMTthreshold(float windowlow, float windowhi, f
 			stringstream hinamefrac;
 			stringstream hinamerate;
 			hinamefrac << 100. * his->Integral(his->GetXaxis()->FindBin(threshold) + 1, his->GetXaxis()->FindBin(rangeend)) / his->GetEntries() << "% > " << threshold << unit;
-			hinamerate << ">0.5 pe=" << threshold/(windowhi-windowlow) << unit << " -> " << his->Integral(his->GetXaxis()->FindBin(threshold) + 1, his->GetXaxis()->FindBin(rangeend)) / his->GetEntries() / (1.e-3 * (end - start)) << " MHz";
+			hinamerate << ">0.5 pe=" << threshold << unit << " -> " << his->Integral(his->GetXaxis()->FindBin(threshold) + 1, his->GetXaxis()->FindBin(rangeend)) / his->GetEntries() / (1.e-3 * (end - start)) << " MHz";
 			cout << "\n" << hinamerate.str().c_str() << endl;
 			cout << "\n" << hinamefrac.str().c_str() << endl;
 			his_hi->SetTitle(hinamerate.str().c_str());
@@ -1417,7 +1417,7 @@ void ReadRun::PrintChargeSpectrumPMTthreshold(float windowlow, float windowhi, f
 
 			threshold_bin_center = his->GetXaxis()->GetBinCenter(his->GetXaxis()->FindBin(threshold) + 1);
 
-			gPad->BuildLegend();
+			gPad->BuildLegend(0.3,0.5,0.9,0.75);
 			
 			
 			darkcount_results.push_back((his->Integral(his->GetXaxis()->FindBin(threshold) + 1, his->GetXaxis()->FindBin(rangeend)) / his->GetEntries() / (1.e-6 * (end - start))));
@@ -1441,11 +1441,16 @@ void ReadRun::PrintChargeSpectrumPMTthreshold(string file_path, string dataname,
 	bool calculate_SiPM_DCR = false;
 	if (threshold == 999) calculate_SiPM_DCR = true;
 
-	TCanvas* chargec = new TCanvas("charge spectra PMT threshold", "charge spectra PMT threshold", 1600, 1000);
+	string integral_option = ""; // use amplitude spectrum (not good for fitting, will be biased)
+	if (windowlow != windowhi) integral_option = "width"; // use charge (integral)
+
+	string ctitle("charge spectra PMT threshold" + to_string(PrintChargeSpectrumPMTthreshold_cnt));
+	TCanvas* chargec = new TCanvas(ctitle.c_str(), ctitle.c_str(), 1600, 1000);
 	SplitCanvas(chargec);
 
 	int current_canvas = 0;
 	float threshold_bin_center = 0.;
+	string unit(" mV");
 
 	for (int i = 0; i < nchannels; i++) {
 		if (plot_active_channels.empty() || find(plot_active_channels.begin(), plot_active_channels.end(), active_channels[i]) != plot_active_channels.end()) {
@@ -1455,11 +1460,18 @@ void ReadRun::PrintChargeSpectrumPMTthreshold(string file_path, string dataname,
 			current_canvas++;
 
 			TH1F* his;
-			his = ChargeSpectrum(i, windowlow, windowhi, start, end, rangestart, rangeend, nbins);
+			his = ChargeSpectrum(i, windowlow, windowhi, start, end, rangestart, rangeend, nbins, integral_option);
+
+			his->GetXaxis()->SetTitle("amplitude in mV");
+			if (windowlow != windowhi) {
+				his->GetXaxis()->SetTitle("integral in mV#timesns");
+				his->GetXaxis()->SetTitle("integral in mV#timesns");
+				unit = " mV#timesns";
+			}
+
 			chargec->cd(current_canvas);
 
 			his->GetYaxis()->SetTitle("#Entries");
-			his->GetXaxis()->SetTitle("integral in mV#timesns");
 			his->Draw();
 			stringstream allname; allname << his->GetEntries() << " entries";
 			his->SetTitle(allname.str().c_str());
@@ -1469,32 +1481,34 @@ void ReadRun::PrintChargeSpectrumPMTthreshold(string file_path, string dataname,
 			his_lo->SetLineColor(2);
 			his_lo->SetFillColor(2);
 			his_lo->Draw("LF2 same");
-			stringstream loname;
-			if (!calculate_SiPM_DCR) {
-			        loname << 100. * his->Integral(his->GetXaxis()->FindBin(rangestart), his->GetXaxis()->FindBin(threshold)) / his->GetEntries() << "% <= " << threshold << " mV";
-				loname << "<0.5 pe=" << threshold/(windowhi-windowlow) << " mV -> " << his->Integral(his->GetXaxis()->FindBin(rangestart), his->GetXaxis()->FindBin(threshold)) / his->GetEntries() / (1.e-6 * (end - start)) << " kHz";
-			}
-			else {
-				loname << "<0.5 pe=" << threshold/(windowhi-windowlow) << " mV -> " << his->Integral(his->GetXaxis()->FindBin(rangestart), his->GetXaxis()->FindBin(threshold)) / his->GetEntries() / (1.e-6 * (end - start)) << " kHz";
-			}
-			his_lo->SetTitle(loname.str().c_str());
+
+			stringstream lonamefrac;
+			stringstream lonamerate;
+			lonamefrac << 100. * his->Integral(his->GetXaxis()->FindBin(rangestart), his->GetXaxis()->FindBin(threshold)) / his->GetEntries() << "% <= " << threshold << unit;
+			lonamerate << "<0.5 pe=" << threshold << unit << " -> " << his->Integral(his->GetXaxis()->FindBin(rangestart), his->GetXaxis()->FindBin(threshold)) / his->GetEntries() / (1.e-3 * (end - start)) << " MHz";
+			cout << "\n" << lonamerate.str().c_str() << endl;
+			cout << "\n" << lonamefrac.str().c_str() << endl;
+			his_lo->SetTitle(lonamerate.str().c_str());
+			if (!calculate_SiPM_DCR) his_lo->SetTitle(lonamefrac.str().c_str());
 
 			auto his_hi = (TH1F*)his->Clone();
 			his_hi->GetXaxis()->SetRange(his_hi->GetXaxis()->FindBin(threshold), his_lo->GetXaxis()->FindBin(rangeend));
 			his_hi->SetLineColor(1);
 			his_hi->SetFillColor(1);
 			his_hi->Draw("LF2 same");
-			stringstream hiname;
-			if (! calculate_SiPM_DCR) {
-		        hiname << 100. * his->Integral(his->GetXaxis()->FindBin(threshold) + 1, his->GetXaxis()->FindBin(rangeend)) / his->GetEntries() << "% > " << threshold << " mV";
-			hiname << ">0.5 pe=" << threshold/(windowhi-windowlow) << " mV -> " << his->Integral(his->GetXaxis()->FindBin(threshold) + 1, his->GetXaxis()->FindBin(rangeend)) / his->GetEntries() / (1.e-6 * (end - start)) << " kHz";   
-			}
-			else {
-				hiname << ">0.5 pe=" << threshold/(windowhi-windowlow) << " mV -> " << his->Integral(his->GetXaxis()->FindBin(threshold) + 1, his->GetXaxis()->FindBin(rangeend)) / his->GetEntries() / (1.e-6 * (end - start)) << " kHz";
-			}
-			his_hi->SetTitle(hiname.str().c_str());
+
+			stringstream hinamefrac;
+			stringstream hinamerate;
+			hinamefrac << 100. * his->Integral(his->GetXaxis()->FindBin(threshold) + 1, his->GetXaxis()->FindBin(rangeend)) / his->GetEntries() << "% > " << threshold << unit;
+			hinamerate << ">0.5 pe=" << threshold << unit << " -> " << his->Integral(his->GetXaxis()->FindBin(threshold) + 1, his->GetXaxis()->FindBin(rangeend)) / his->GetEntries() / (1.e-3 * (end - start)) << " MHz";
+			cout << "\n" << hinamerate.str().c_str() << endl;
+			cout << "\n" << hinamefrac.str().c_str() << endl;
+			his_hi->SetTitle(hinamerate.str().c_str());
+			if (!calculate_SiPM_DCR) his_hi->SetTitle(hinamefrac.str().c_str());
+
 			threshold_bin_center = his->GetXaxis()->GetBinCenter(his->GetXaxis()->FindBin(threshold) + 1);
-			gPad->BuildLegend();
+
+			gPad->BuildLegend(0.3,0.5,0.9,0.75);
 			
 			
 			darkcount_results.push_back((his->Integral(his->GetXaxis()->FindBin(threshold) + 1, his->GetXaxis()->FindBin(rangeend)) / his->GetEntries() / (1.e-6 * (end - start))));

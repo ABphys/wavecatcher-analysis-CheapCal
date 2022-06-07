@@ -17,7 +17,6 @@ void readout(int which) // main
 	
 	bool isDC = true;
 	double thres=0;
-//	bool isnew;
 
 	string path = "/home/marte/software/wavecatcher-analysis-main/Data/";
 	string folder;
@@ -69,28 +68,35 @@ void readout(int which) // main
 	}
 	case(5):{
 	folder = "20220602_Source";
+	dataname = "55V_Lasertriggered"; //at normal temperature 
+	thres = -3;
+	break;
+	}
+	case(6):{
+	folder = "20220601_Darkcount";
+	dataname = "Darkcount_Ch0_Ch2155V"; //at normal temperature 
+	thres = -3;
+	break;
+	}
+	case(7):{
+	folder = "20220602_Source";
 	dataname = "Darkcount_Ch0_Ch2155V_2"; //at normal temperature 
 	thres = -3;
 	break;
 	}
-
     }
 	// the splitting in the path has a reason. It is needed to later save and name the data in a usefull place
 	path_to_folder = path + folder + "/";	
 	path_to_data =path_to_folder + dataname +"/" ;
-	//isDC = true;
-	
-	
-	
 	
 	// initialize class
 	ReadRun mymeas(0);
 
 	// read data
 	// Alessia saving root file
-	//mymeas.ReadFile(path_to_data, true, 0, "/home/marte/software/wavecatcher-analysis-main/Results/" +folder + "/" + dataname+ ".root");  
+	mymeas.ReadFile(path_to_data, true, 0, "/home/marte/software/wavecatcher-analysis-main/Results/" +folder + "/" + dataname+ ".root");  
 	// Ben saving root file 
-        mymeas.ReadFile(path_to_data, true, 0, path_to_data+ "/results.root"); // saves root output in the datafolder as results.root 
+       //mymeas.ReadFile(path_to_data, true, 0, path_to_data+ "/results.root"); // saves root output in the datafolder as results.root 
 	
 	// only plot certain channels
 	mymeas.plot_active_channels = {0,1};
@@ -100,13 +106,13 @@ void readout(int which) // main
 	if (!isDC) which_blc = 2;
 	if (which_blc == 0) {
 		mymeas.SmoothAll(5);
-		mymeas.CorrectBaseline(95., 105.);	//
+		mymeas.CorrectBaseline(95., 105.);	
 	}
 	else if (which_blc == 1) {
-		mymeas.CorrectBaselineMinSlopeRMS(100, false, 5, 900, 500, false);
+		mymeas.CorrectBaselineMinSlopeRMS(100, false, 5, 250, 10, false);
 	}
 	else {
-		mymeas.CorrectBaselineMin(80, false, 1., 250, 10, false);
+		mymeas.CorrectBaselineMin(80, false, 1., 650, 450, false);
 	}
 
 	// check how many events are above a certain threshold
@@ -130,19 +136,23 @@ void readout(int which) // main
 
 	// plot all channels
 	if (isDC) {
-		//mymeas.PrintChargeSpectrum_pars = { 2e5, 0.6, 0.1, 3.5, 6, 30, -30, 1., 1 };
 		mymeas.PrintChargeSpectrum_pars = { 1e5, 0.3, 0.2, 6., 6., 40., 0 };
 		mymeas.PrintChargeSpectrum(path_to_folder, dataname, intwindowminus, intwindowplus, findmaxfrom, findmaxto, -20, 150, 200, 5, 150, 99, -1);
 		mymeas.PrintAmplitudeSpectrum(path_to_folder, dataname, 0, 0, findmaxfrom, findmaxto, 0, 20, 200);  //to have the mV in the graph you need to set intwindowminus = intwindowminus 
 	}
 	else {
 		mymeas.PrintChargeSpectrum_pars = { 1e4, 1.5, 0.25, 6., 6., 40, 2 };
-		mymeas.PrintChargeSpectrum(path_to_folder, dataname, intwindowminus, intwindowplus, findmaxfrom, findmaxto, -30, 350, 200);
-		mymeas.PrintAmplitudeSpectrum(path_to_folder, dataname, intwindowminus, intwindowplus, findmaxfrom, findmaxto, 0, 20, 200);
+		mymeas.PrintChargeSpectrum(path_to_folder, dataname, intwindowminus, intwindowplus, findmaxfrom, findmaxto, -30, 350, 200,1,1,2,0);
+		mymeas.PrintAmplitudeSpectrum(path_to_folder, dataname, 0, 0, findmaxfrom, findmaxto, 0, 20, 200);
 	}
 	// setting a threshold of 999 enables that the threshold is calculated with the gain/2 + pedestial from the fit
-	mymeas.PrintChargeSpectrumPMTthreshold(path_to_folder, dataname, intwindowminus, intwindowplus, findmaxfrom, findmaxto, -20, 150, 200, mymeas.fit_results[0]->Parameter(6) + mymeas.fit_results[0]->Parameter(5)/2.);
-	mymeas.PrintChargeSpectrumPMTthreshold(0, 0, findmaxfrom, findmaxto, 0, 15, 200, 5);
+	
+	
+	if(isDC){
+	mymeas.PrintChargeSpectrumPMTthreshold(path_to_folder, dataname,intwindowminus, intwindowplus, findmaxfrom, findmaxto, -20, 150, 200, 999);
+	mymeas.PrintChargeSpectrumPMTthreshold(path_to_folder, dataname+"_5mV",0, 0, findmaxfrom, findmaxto, 0,15, 200, 5);
+	mymeas.PrintChargeSpectrumPMTthreshold(path_to_folder, dataname+"_1.5pe",intwindowminus, intwindowplus, findmaxfrom, findmaxto, -20, 150, 200, mymeas.fit_results[0]->Parameter(6) + 1.5 * mymeas.fit_results[0]->Parameter(5));
+	}
 	
 	//fstream my_file;
 	my_file.open(path +"/" + folder +"/" + folder +"_results.txt", ios::app); //::app will append to file ::out will override file
@@ -154,6 +164,7 @@ void readout(int which) // main
 		my_file << dataname << " " << mymeas.darkcount_results[0]<< " " << mymeas.darkcount_results[1] << " "<< mymeas.fit_results[0]->Parameter(5)<< " " << mymeas.fit_results[1]->Parameter(5) <<  "\n"; //Add to file: Name of measurement, Darkcount first channel, Darkcount second channel
 		my_file.close();
 	}
+	
 	
 	// plot waveforms of individual events
 	//plot range
