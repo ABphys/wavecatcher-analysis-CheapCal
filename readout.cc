@@ -15,10 +15,9 @@ void readout(int which) // main
 	// better create separate file just for DC measurements
 
 	
-	bool isDC = true;
-	double thres=0;
+	bool isDC = false;
 
-	string path = "/home/marte/software/wavecatcher-analysis-main/Data/";
+	string path = "/home/marte/software/wavecatcher-analysis-CheapCal/Data/";
 	string folder;
 	string dataname;
 	string path_to_folder;
@@ -39,49 +38,153 @@ void readout(int which) // main
 	case(0):{
 	folder = "20220602_Source";
 	dataname = "55V_Coincidence_one_Fibre_software_triggered";
-	thres = -3;
 	break;
 	}
 	case(1):{
 	folder = "20220602_Source";
 	dataname = "55V_Coincidence_one_Fibre_with_source";
-	thres = -3;
 	break;
 	}
 	case(2):{
 	folder = "20220602_Source";
 	dataname = "55V_Coincidence_Ch0_Ch1_Th_5mV_without_source_more_delay";
-	thres = -3;
 	break;
 	}
 	case(3):{
 	folder = "20220602_Source";
 	dataname = "55V_Coincidence_Ch0_Ch1_Th_5mV_less_delay";
-	thres = -3;
 	break;
 	}
 	case(4):{
 	folder = "20220602_Source";
 	dataname = "55V_Darkcount"; //At 40 degrees
-	thres = -3;
 	break;
 	}
 	case(5):{
 	folder = "20220602_Source";
 	dataname = "55V_Lasertriggered"; //at normal temperature 
-	thres = -3;
 	break;
 	}
 	case(6):{
 	folder = "20220601_Darkcount";
 	dataname = "Darkcount_Ch0_Ch2155V"; //at normal temperature 
-	thres = -3;
 	break;
 	}
 	case(7):{
 	folder = "20220602_Source";
 	dataname = "Darkcount_Ch0_Ch2155V_2"; //at normal temperature 
-	thres = -3;
+	break;
+	}
+	
+	
+	
+	case(8):{
+	folder = "20220608_Distante_channels";
+	dataname = "Darkcount_lowT_55V"; //at normal temperature 
+	break;
+	}
+	case(9):{
+	folder = "20220608_Distante_channels";
+	dataname = "Darkcount_highT_55V"; //at high temperature 
+	break;
+	}
+	case(10):{
+	folder = "20220608_Distante_channels";
+	dataname = "Darkcount_lowT_55V"; //at normal temperature 
+	break;
+	}
+	case(11):{
+	folder = "20220608_Distante_channels";
+	dataname = "2fibers_Ch0_Ch2_also_Ch1_Ch4_available"; //at high temperature 
+	break;
+	}
+	case(12):{
+	folder = "20220608_Distante_channels";
+	dataname = "2fibers_Ch0_Ch2_also_Ch1_Ch4_available_source"; //at normal temperature 
+	break;
+	}
+	case(13):{
+	folder = "20220608_Distante_channels";
+	dataname = "2fibers_Ch0_Ch2_also_Ch1_Ch4_available_source_2"; //at high temperature 
+	break;
+	}
+	
+	
+	
+	case(14):{
+	folder = "20220609_Distante_channels";
+	dataname = "2fibers_Ch0_Ch2_also_Ch1_Ch4_available"; //at high temperature 
+	break;
+	}
+	case(15):{
+	folder = "20220609_Distante_channels";
+	dataname = "2fibers_Ch0_Ch2_also_Ch1_Ch4_available_source"; //at normal temperature 
+	break;
+	}
+	case(16):{
+	folder = "20220609_Distante_channels";
+	dataname = "55V_Darkcount_low_T"; //at normal temperature 
+	break;
+	}
+	case(17):{
+	folder = "20220609_Distante_channels";
+	dataname = "55V_Darkcount_high_T"; //at normal temperature 
+	break;
+	}
+	
+	
+	
+	case(18):{
+	folder = "20220610_Distance_channels";
+	dataname = "Darkcounts_55V_Ch0-1-2-4"; //at normal temperature 
+	isDC = true;
+	break;
+	}
+	case(19):{
+	folder = "20220610_Distance_channels";
+	dataname = "2fibers_Ch0_Ch2_also_Ch1_Ch4_available_timed"; //same time 
+	break;
+	}
+	case(20):{
+	folder = "20220610_Distance_channels";
+	dataname = "2fibers_Ch0_Ch2_also_Ch1_Ch4_available";  
+	break;
+	}
+	case(21):{
+	folder = "20220610_Distance_channels";
+	dataname = "2fibers_Ch0_Ch2_also_Ch1_Ch4_available_source"; 
+	break;
+	}
+	case(22):{
+	folder = "20220610_Distance_channels";
+	dataname = "1fiber_also_Ch1_Ch4_available_source"; // check the cross 
+	break;
+	}
+	
+	case(23):{
+	folder = "20220614_Wrapped";
+	dataname = "55V_Darkcount"; //at high temperature 
+	isDC = true;
+	break;
+	}
+	case(24):{
+	folder = "20220614_Wrapped";
+	dataname = "Coincidence_Ch2_Ch3";
+	break;
+	}
+	case(25):{
+	folder = "20220614_Wrapped";
+	dataname = "Coincidence_Ch2_Ch3_source";  
+	break;
+	}
+	case(26):{
+	folder = "20220614_Wrapped";
+	dataname = "Trigger_Ch2_source"; 
+	break;
+	}
+	case(27):{
+	folder = "20220614_Wrapped";
+	dataname = "Trigger_Ch3_source"; // check the cross 
 	break;
 	}
     }
@@ -94,12 +197,12 @@ void readout(int which) // main
 
 	// read data
 	// Alessia saving root file
-	mymeas.ReadFile(path_to_data, true, 0, "/home/marte/software/wavecatcher-analysis-main/Results/" +folder + "/" + dataname+ ".root");  
+	mymeas.ReadFile(path_to_data, true, 0,"/home/marte/software/wavecatcher-analysis-CheapCal/Results/" +folder + "/" + dataname+ ".root");  
 	// Ben saving root file 
        //mymeas.ReadFile(path_to_data, true, 0, path_to_data+ "/results.root"); // saves root output in the datafolder as results.root 
 	
 	// only plot certain channels
-	mymeas.plot_active_channels = {0,1};
+	mymeas.plot_active_channels = {2,3};
 
 	//apply baseline correction to ALL waveforms <- NEEDED but slow when not compiled
 	int which_blc = 1;
@@ -109,10 +212,10 @@ void readout(int which) // main
 		mymeas.CorrectBaseline(95., 105.);	
 	}
 	else if (which_blc == 1) {
-		mymeas.CorrectBaselineMinSlopeRMS(100, false, 5, 250, 10, false);
+		mymeas.CorrectBaselineMinSlopeRMS(100, false, 5, 600, 10, false);
 	}
 	else {
-		mymeas.CorrectBaselineMin(80, false, 1., 650, 450, false);
+		mymeas.CorrectBaselineMin(80, false, 1., 600, 450, false);
 	}
 
 	// check how many events are above a certain threshold
@@ -142,29 +245,28 @@ void readout(int which) // main
 	}
 	else {
 		mymeas.PrintChargeSpectrum_pars = { 1e4, 1.5, 0.25, 6., 6., 40, 2 };
-		mymeas.PrintChargeSpectrum(path_to_folder, dataname, intwindowminus, intwindowplus, findmaxfrom, findmaxto, -30, 350, 200,1,1,2,0);
-		mymeas.PrintAmplitudeSpectrum(path_to_folder, dataname, 0, 0, findmaxfrom, findmaxto, 0, 20, 200);
+		mymeas.PrintChargeSpectrum(path_to_folder, dataname, intwindowminus, intwindowplus, findmaxfrom, findmaxto, -30, 550, 200,1,1,2,0);
+		mymeas.PrintAmplitudeSpectrum(path_to_folder, dataname, 0, 0, findmaxfrom, findmaxto, 0, 100, 200);
 	}
 	// setting a threshold of 999 enables that the threshold is calculated with the gain/2 + pedestial from the fit
 	
 	
-	if(isDC){
-	mymeas.PrintChargeSpectrumPMTthreshold(path_to_folder, dataname,intwindowminus, intwindowplus, findmaxfrom, findmaxto, -20, 150, 200, 999);
-	mymeas.PrintChargeSpectrumPMTthreshold(path_to_folder, dataname+"_5mV",0, 0, findmaxfrom, findmaxto, 0,15, 200, 5);
-	mymeas.PrintChargeSpectrumPMTthreshold(path_to_folder, dataname+"_1.5pe",intwindowminus, intwindowplus, findmaxfrom, findmaxto, -20, 150, 200, mymeas.fit_results[0]->Parameter(6) + 1.5 * mymeas.fit_results[0]->Parameter(5));
-	}
-	
-	//fstream my_file;
-	my_file.open(path +"/" + folder +"/" + folder +"_results.txt", ios::app); //::app will append to file ::out will override file
-	if (!my_file) {
-		cout << "File not created!";
-	}
-	else {
-		cout << "File created successfully!";
-		my_file << dataname << " " << mymeas.darkcount_results[0]<< " " << mymeas.darkcount_results[1] << " "<< mymeas.fit_results[0]->Parameter(5)<< " " << mymeas.fit_results[1]->Parameter(5) <<  "\n"; //Add to file: Name of measurement, Darkcount first channel, Darkcount second channel
-		my_file.close();
-	}
-	
+	//if(isDC){
+		mymeas.PrintChargeSpectrumPMTthreshold(path_to_folder, dataname,intwindowminus, intwindowplus, findmaxfrom, findmaxto, -20, 150, 200, 999);
+		mymeas.PrintChargeSpectrumPMTthreshold(path_to_folder, dataname+"_1.5pe",intwindowminus, intwindowplus, findmaxfrom, findmaxto, -20, 150, 200, mymeas.fit_results[0]->Parameter(6) + 1.5 * mymeas.fit_results[0]->Parameter(5));
+		
+		
+		//fstream my_file;
+		my_file.open(path +"/" + folder +"/" + folder +"_results.txt", ios::app); //::app will append to file ::out will override file
+		if (!my_file) {
+			cout << "File not created!";
+		}
+		else {
+			cout << "File created successfully!";
+			my_file << dataname << " " << mymeas.darkcount_results[0]<< " " << mymeas.darkcount_results[1] << " "<< mymeas.fit_results[0]->Parameter(5)<< " " << mymeas.fit_results[1]->Parameter(5) <<  "\n"; //Add to file: Name of measurement, Darkcount first channel, Darkcount second channel
+			my_file.close();
+		}
+	//}
 	
 	// plot waveforms of individual events
 	//plot range
