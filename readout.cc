@@ -16,6 +16,8 @@ void readout(int which) // main
 
 	
 	bool isDC = false;
+	
+	vector<int> Chs;
 
 	string path = "/home/marte/software/wavecatcher-analysis-CheapCal/Data/";
 	string folder;
@@ -185,8 +187,37 @@ void readout(int which) // main
 	case(27):{
 	folder = "20220614_Wrapped";
 	dataname = "Trigger_Ch3_source"; // check the cross 
+	Chs = {0,1,2,4};
+	}
+	
+	//old trigger position 200-250 for the maximum searching -- 0 delay 
+	
+	//new trigger position 110-140 for the maximum searching -- 5 delay 
+	
+	
+	case(28):{
+	folder = "20220616_Triggerbox";
+	dataname = "Triggerbox_Ch0_30mV-Ch2-Ch3_fiber_source"; 
+	Chs = {0,2,3};
 	break;
 	}
+	
+	
+	case(29):{
+	folder = "20220617_Triggerbox_different_threshold";
+	dataname = "Ch14_Ch26_TB_Ch2_fiber_5mV-readout_Ch3_fiber"; 
+	Chs = {14,26,2,3};
+	break;
+	}
+	
+	case(30):{
+	folder = "20220617_Triggerbox_different_threshold";
+	dataname = "Ch0_TB_10mV-readout-Ch2-Ch3_fiber"; 
+	Chs = {0,2,3};
+	break;
+	}
+	
+	
     }
 	// the splitting in the path has a reason. It is needed to later save and name the data in a usefull place
 	path_to_folder = path + folder + "/";	
@@ -202,7 +233,7 @@ void readout(int which) // main
        //mymeas.ReadFile(path_to_data, true, 0, path_to_data+ "/results.root"); // saves root output in the datafolder as results.root 
 	
 	// only plot certain channels
-	mymeas.plot_active_channels = {2,3};
+	mymeas.plot_active_channels = Chs;
 
 	//apply baseline correction to ALL waveforms <- NEEDED but slow when not compiled
 	int which_blc = 1;
@@ -215,7 +246,7 @@ void readout(int which) // main
 		mymeas.CorrectBaselineMinSlopeRMS(100, false, 5, 600, 10, false);
 	}
 	else {
-		mymeas.CorrectBaselineMin(80, false, 1., 600, 450, false);
+		mymeas.CorrectBaselineMin(80, false, 1., 450, 200, false);
 	}
 
 	// check how many events are above a certain threshold
@@ -228,9 +259,9 @@ void readout(int which) // main
 
 	// investigate charge spectrum. should see photo electron peaks here
 	float intwindowminus = 10.;	// lower integration window in ns rel. to max
-	float intwindowplus = 30.;	// upper integration window in ns rel. to max
-	float findmaxfrom = 200.;	// assume signal from laser arrives between here ...
-	float findmaxto = 250.;	// ... and here (depends on trigger delay setting)
+	float intwindowplus = 60.;	// upper integration window in ns rel. to max
+	float findmaxfrom = 110.;	// assume signal from laser arrives between here ...
+	float findmaxto = 140.;	// ... and here (depends on trigger delay setting)
 
 	if (isDC) {
 		findmaxfrom = 20 + intwindowminus;
@@ -245,13 +276,13 @@ void readout(int which) // main
 	}
 	else {
 		mymeas.PrintChargeSpectrum_pars = { 1e4, 1.5, 0.25, 6., 6., 40, 2 };
-		mymeas.PrintChargeSpectrum(path_to_folder, dataname, intwindowminus, intwindowplus, findmaxfrom, findmaxto, -30, 550, 200,1,1,2,0);
-		mymeas.PrintAmplitudeSpectrum(path_to_folder, dataname, 0, 0, findmaxfrom, findmaxto, 0, 100, 200);
+		mymeas.PrintChargeSpectrum(path_to_folder, dataname, intwindowminus, intwindowplus, findmaxfrom, findmaxto, -30, 1000, 200,1,1,2,0);
+		//mymeas.PrintAmplitudeSpectrum(path_to_folder, dataname, 0, 0, findmaxfrom, findmaxto, 0, 100, 500);
 	}
 	// setting a threshold of 999 enables that the threshold is calculated with the gain/2 + pedestial from the fit
 	
 	
-	//if(isDC){
+	if(isDC){
 		mymeas.PrintChargeSpectrumPMTthreshold(path_to_folder, dataname,intwindowminus, intwindowplus, findmaxfrom, findmaxto, -20, 150, 200, 999);
 		mymeas.PrintChargeSpectrumPMTthreshold(path_to_folder, dataname+"_1.5pe",intwindowminus, intwindowplus, findmaxfrom, findmaxto, -20, 150, 200, mymeas.fit_results[0]->Parameter(6) + 1.5 * mymeas.fit_results[0]->Parameter(5));
 		
@@ -266,7 +297,7 @@ void readout(int which) // main
 			my_file << dataname << " " << mymeas.darkcount_results[0]<< " " << mymeas.darkcount_results[1] << " "<< mymeas.fit_results[0]->Parameter(5)<< " " << mymeas.fit_results[1]->Parameter(5) <<  "\n"; //Add to file: Name of measurement, Darkcount first channel, Darkcount second channel
 			my_file.close();
 		}
-	//}
+	}
 	
 	// plot waveforms of individual events
 	//plot range
