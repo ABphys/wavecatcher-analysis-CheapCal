@@ -764,6 +764,33 @@ void ReadRun::SkipEventsPerChannel(vector<double> thresholds, bool verbose) {
 	cout << "\n\n\t" << counter << " events will be cut out of " << nevents << "\n\n";
 }
 
+/// function filter for PMT 
+void ReadRun::IntegralFilter(vector<double> thresholds, vector<bool> highlow, float windowlow, float windowhi, bool verbose) {
+	// Same as SkipEventsPerChannel() but filtering all events with integrals above/below thresholds
+
+	cout << "\n\n Removing events with individual threshold per channel!!!\n\n";
+	int counter = 0;
+	float integ = 0;
+
+	for (int j = 0; j < nwf; j++) {
+		if (!skip_event[floor(j / nchannels)]) {
+			auto his = (TH1F*)((TH1F*)rundata->At(j))->Clone(); // use Clone() to not change ranges of original histogram
+			integ = his->Integral(his->GetXaxis()->FindBin(windowlow), his->GetXaxis()->FindBin(windowhi), "width");
+
+			int currchannel = j - nchannels * floor(j / nchannels);
+
+			if (currchannel <= thresholds.size() && thresholds[currchannel] != 0 && !skip_event[floor(j / nchannels)] && ((highlow[currchannel] && integ > thresholds[currchannel]) || (!highlow[currchannel] && integ < thresholds[currchannel]))) {
+				int currevent = eventnr_storage[floor(j / nchannels)];
+				if (verbose) cout << "\nevent:\t" << currevent << "\tchannel:\t" << active_channels[currchannel] << "\tthreshold\t" << thresholds[currchannel];
+				skip_event[floor(j / nchannels)] = true;
+				counter++;
+			}
+		}
+	}
+	cout << "\n\n\t" << counter << " events will be cut out of " << nevents << endl;
+}
+
+
 // functions for charge spectrum
 
 int* ReadRun::GetIntWindow(TH1F* his, float windowlow, float windowhi, float start, float end, int channel) {
