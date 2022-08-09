@@ -18,6 +18,9 @@ void readout(int which) // main
 	bool isDC = false;
 	
 	vector<int> Chs;
+	vector<double> thresholds = {0,0,0,0};
+	vector<double> thresholds_ampl = {0,0,0,0};
+	vector<bool> highlow = {false,false,false,false};
 
 	string path = "/home/marte/software/wavecatcher-analysis-CheapCal/Data/";
 	string folder;
@@ -188,7 +191,9 @@ void readout(int which) // main
 	folder = "20220614_Wrapped";
 	dataname = "Trigger_Ch3_source"; // check the cross 
 	Chs = {0,1,2,4};
+	break;
 	}
+	
 	
 	//old trigger position 200-250 for the maximum searching -- 0 delay 
 	
@@ -206,16 +211,171 @@ void readout(int which) // main
 	case(29):{
 	folder = "20220617_Triggerbox_different_threshold";
 	dataname = "Ch14_Ch26_TB_Ch2_fiber_5mV-readout_Ch3_fiber"; 
-	Chs = {14,26,2,3};
+	Chs = {2,3};
 	break;
 	}
 	
+	// After adding reflective foil
+	
 	case(30):{
-	folder = "20220617_Triggerbox_different_threshold";
-	dataname = "Ch0_TB_10mV-readout-Ch2-Ch3_fiber"; 
-	Chs = {0,2,3};
+	folder = "20220620_Triggerbox_and_Fibre";
+	dataname = "Trigger_Ch2_Ch14_Ch26_Readout_Ch3_again"; 
+	Chs = {2,3,14,26};
 	break;
 	}
+	
+	
+	
+	
+	
+	case(31):{
+	folder = "20220624_Spatial_resolution_2_Trigger/Hot";
+	dataname = "Trigger_20mV_TBup_Ch26_TBdown_Ch14_Readout_Ch2_Ch3"; // P1 -- 20mV
+	Chs = {2,3,14,26};
+	break;
+	}
+	
+	case(32):{
+	folder = "20220624_Spatial_resolution_2_Trigger/Hot";
+	dataname = "Trigger_6mV_TBup_Ch26_TBdown_Ch14_Readout_Ch2_Ch3"; // P1 hot
+	Chs = {2,3};
+	break;
+	}
+	
+	case(33):{
+	folder = "20220624_Spatial_resolution_2_Trigger/Hot";
+	dataname = "Trigger_6mV_TBup_Ch26_TBdown_Ch14_Readout_Ch2_Ch3_pos_2"; // P2 hot
+	Chs = {2,3};
+	break;
+	}
+	
+	case(34):{
+	folder = "20220624_Spatial_resolution_2_Trigger";
+	dataname = "Trigger_6mV_TBup_Ch26_TBdown_Ch14_Readout_Ch2_Ch3_pos_3"; // P3 hot
+	Chs = {2,3};
+	break;
+	}
+	
+	case(35):{
+	folder = "20220624_Spatial_resolution_2_Trigger";
+	dataname = "Trigger_6mV_TBup_Ch26_TBdown_Ch14_Readout_Ch2_Ch3_pos_0"; // P0 
+	Chs = {2,3};
+	break;
+	}
+	
+	case(36):{
+	folder = "20220624_Spatial_resolution_2_Trigger";
+	dataname = "Trigger_6mV_TBup_Ch26_TBdown_Ch14_Readout_Ch2_Ch3_pos_4"; // P4
+	Chs = {2,3};
+	break;
+	}
+	case(37):{
+	folder = "20220624_Spatial_resolution_2_Trigger";
+	dataname = "Trigger_6mV_TBup_Ch26_TBdown_Ch14_Readout_Ch2_Ch3_pos_5"; // P5
+	Chs = {2,3,14,26};
+	break;
+	}
+	
+	case(38):{
+	folder = "20220624_Spatial_resolution_2_Trigger";
+	dataname = "Trigger_6mV_TBup_Ch26_TBdown_Ch14_Readout_Ch2_Ch3_pos_1"; // P1 coldish 31deg 
+	Chs = {2,3};
+	break;
+	}
+	case(39):{
+	folder = "20220624_Spatial_resolution_2_Trigger";
+	dataname = "Trigger_6mV_TBup_Ch26_TBdown_Ch14_Readout_Ch2_Ch3_pos_2"; // P2 cold 
+	Chs = {2,3};
+	break;
+	}
+	case(40):{
+	folder = "20220624_Spatial_resolution_2_Trigger";
+	dataname = "Trigger_6mV_TBup_Ch26_TBdown_Ch14_Readout_Ch2_Ch3_pos_3"; // P3 cold 
+	Chs = {2,3};
+	break;
+	}
+	
+	case(41):{
+	folder = "20220706_Darkcount_newT";
+	dataname = "Darkcount_27C_28C"; // after using the fan 
+	Chs = {2,3};
+	isDC=true;
+	break;
+	}
+	
+	
+	case(42):{
+	folder = "20220714_Test_30mV";
+	dataname = "Triggerbox_Ch0_30mV-Ch2-Ch3_fiber_source"; // test TB UP 30mV
+	Chs = {2,3,14,26};
+	break;
+	}
+	
+	case(43):{
+	folder = "20220714_Test_30mV";
+	dataname = "Triggerbox_Ch0_30mV-Ch2-Ch3_fiber_source_dark"; // test TB UP 30mV
+	Chs = {2,3,14,26};
+	break;
+	}
+	
+	// Again all the position since there was light 
+	
+	case(44):{
+	folder = "20220718__Spatial_resolution";
+	dataname = "Coincidence_TB_Ch14_Ch26_10mV_Readout_Ch2_Ch3_Pos_0"; // P0 
+	Chs = {2,3,14,26};
+	break;
+	}
+	
+	case(45):{
+	folder = "20220718__Spatial_resolution";
+	dataname = "Coincidence_TB_Ch14_Ch26_10mV_Readout_Ch2_Ch3_Pos_4"; // P4
+	Chs = {2,3,14,26};
+	break;
+	}
+	case(46):{
+	folder = "20220718__Spatial_resolution";
+	dataname = "Coincidence_TB_Ch14_Ch26_10mV_Readout_Ch2_Ch3_Pos_1"; // P1
+	Chs = {2,3,14,26};
+	break;
+	}
+	
+	case(47):{
+	folder = "20220718__Spatial_resolution";
+	dataname = "Coincidence_TB_Ch14_Ch26_10mV_Readout_Ch2_Ch3_Pos_1_5_again"; // P1.5 
+	Chs = {2,3};
+	break;
+	}
+	case(48):{
+	folder = "20220718__Spatial_resolution";
+	dataname = "Coincidence_TB_Ch14_Ch26_10mV_Readout_Ch2_Ch3_Pos_2"; // P2  
+	Chs = {2,3};
+	break;
+	}
+	case(49):{
+	folder = "20220718__Spatial_resolution";
+	dataname = "Coincidence_TB_Ch14_Ch26_10mV_Readout_Ch2_Ch3_Pos_3"; // P3  
+	Chs = {2,3};
+	break;
+	}
+	case(50):{
+	folder = "20220718__Spatial_resolution";
+	dataname = "Coincidence_TB_Ch14_Ch26_10mV_Readout_Ch2_Ch3_Pos_4_5"; // P4  
+	Chs = {2,3};
+	break;
+	}
+	case(51):{
+	folder = "20220718__Spatial_resolution";
+	dataname = "Coincidence_TB_Ch14_Ch26_10mV_Readout_Ch2_Ch3_Pos_5"; // P5
+	Chs = {2,3};
+	break;
+	}
+	
+	
+	
+	
+	
+	
 	
 	
     }
@@ -237,16 +397,16 @@ void readout(int which) // main
 
 	//apply baseline correction to ALL waveforms <- NEEDED but slow when not compiled
 	int which_blc = 1;
-	if (!isDC) which_blc = 2;
+	//if (!isDC) which_blc = 2;
 	if (which_blc == 0) {
 		mymeas.SmoothAll(5);
 		mymeas.CorrectBaseline(95., 105.);	
 	}
 	else if (which_blc == 1) {
-		mymeas.CorrectBaselineMinSlopeRMS(100, false, 5, 600, 10, false);
+		mymeas.CorrectBaselineMinSlopeRMS(50, false, 5, 300, 10, false);
 	}
 	else {
-		mymeas.CorrectBaselineMin(80, false, 1., 450, 200, false);
+		mymeas.CorrectBaselineMin(50, false, 1., 300, 0, false);
 	}
 
 	// check how many events are above a certain threshold
@@ -255,19 +415,25 @@ void readout(int which) // main
 	////plotting
 
 	// plot sums of all events per channel
+	//mymeas.PlotChannelSums(true, false, true, intwindowminus, intwindowplus, findmaxfrom, findmaxto);
 	mymeas.PlotChannelSums(true);
-
 	// investigate charge spectrum. should see photo electron peaks here
-	float intwindowminus = 10.;	// lower integration window in ns rel. to max
-	float intwindowplus = 60.;	// upper integration window in ns rel. to max
-	float findmaxfrom = 110.;	// assume signal from laser arrives between here ...
-	float findmaxto = 140.;	// ... and here (depends on trigger delay setting)
+	float intwindowminus = 20.;	// lower integration window in ns rel. to max
+	float intwindowplus = 65.;	// upper integration window in ns rel. to max
+	float findmaxfrom = 100.;	// assume signal from laser arrives between here ...
+	float findmaxto = 160.;	// ... and here (depends on trigger delay setting)
 
 	if (isDC) {
 		findmaxfrom = 20 + intwindowminus;
 		findmaxto = 280. - intwindowplus;
 	}
 
+        //Filter function 
+//       mymeas.SkipEventsPerChannel(thresholds_ampl, true); //per amplitude
+	//mymeas.IntegralFilter(thresholds,highlow, 95, 205,true); //per charge 
+	
+	
+	
 	// plot all channels
 	if (isDC) {
 		mymeas.PrintChargeSpectrum_pars = { 1e5, 0.3, 0.2, 6., 6., 40., 0 };
@@ -276,8 +442,8 @@ void readout(int which) // main
 	}
 	else {
 		mymeas.PrintChargeSpectrum_pars = { 1e4, 1.5, 0.25, 6., 6., 40, 2 };
-		mymeas.PrintChargeSpectrum(path_to_folder, dataname, intwindowminus, intwindowplus, findmaxfrom, findmaxto, -30, 1000, 200,1,1,2,0);
-		//mymeas.PrintAmplitudeSpectrum(path_to_folder, dataname, 0, 0, findmaxfrom, findmaxto, 0, 100, 500);
+		mymeas.PrintChargeSpectrum(path_to_folder, dataname+ "", intwindowminus, intwindowplus, findmaxfrom, findmaxto, -30, 1200, 200,30,900,2,0);
+		//mymeas.PrintChargeSpectrum(path_to_folder, dataname, 0, 0, findmaxfrom, findmaxto, 0, 100, 1000);
 	}
 	// setting a threshold of 999 enables that the threshold is calculated with the gain/2 + pedestial from the fit
 	
@@ -299,6 +465,7 @@ void readout(int which) // main
 		}
 	}
 	
+	
 	// plot waveforms of individual events
 	//plot range
 	double ymin = -5;
@@ -309,5 +476,13 @@ void readout(int which) // main
 		mymeas.PrintChargeSpectrumWF(intwindowminus, intwindowplus, findmaxfrom, findmaxto, i, ymin, ymax);
 	}
 	gROOT->SetBatch(kFALSE);
+	
+	
+	// This is to plot waveforms of individual chosen events:
+	/*vector<int> events_plot = {99002,54495,43524,59091,43421,43188};
+
+	for (int i = 0; i < events_plot.size(); i++) {
+    	mymeas.PrintChargeSpectrumWF(intwindowminus, intwindowplus, findmaxfrom, findmaxto, events_plot[i], ymin, ymax);
+	}*/
 	
 }
