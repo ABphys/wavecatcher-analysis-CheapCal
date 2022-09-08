@@ -348,7 +348,7 @@ void readout(int which) // main
 	}
 	case(48):{
 	folder = "20220718__Spatial_resolution";
-	dataname = "Coincidence_TB_Ch14_Ch26_10mV_Readout_Ch2_Ch3_Pos_2"; // P2  
+	dataname = "Coincidence_TB_Ch14_Ch26_10mV_Readout_Ch2_Ch3_Pos_2_again"; // P2  
 	Chs = {2,3};
 	break;
 	}
@@ -371,10 +371,159 @@ void readout(int which) // main
 	break;
 	}
 	
+	case(52):{
+	folder = "20220718__Spatial_resolution";
+	dataname = "Coincidence_TB_Ch14_Ch26_10mV_Readout_Ch2_Ch3_Pos_6"; // P6
+	Chs = {2,3};
+	break;
+	}
+	
+	case(53):{
+	folder = "20220718__Spatial_resolution";
+	dataname = "Coincidence_TB_Ch14_Ch26_10mV_Readout_Ch2_Ch3_Pos_7"; // P7
+	Chs = {2,3};
+	break;
+	}
+	
+	// repeated measurement 
+	
+	case(54):{
+	folder = "20220718__Spatial_resolution";
+	dataname = "Coincidence_TB_Ch14_Ch26_10mV_Readout_Ch2_Ch3_Pos_4_bis"; // P4
+	Chs = {2,3};
+	break;
+	}
+	
+	case(55):{
+	folder = "20220718__Spatial_resolution";
+	dataname = "Coincidence_TB_Ch14_Ch26_10mV_Readout_Ch2_Ch3_Pos_4_5_bis"; // P4.5
+	Chs = {2,3};
+	break;
+	}
+	
+	//Collimator
+	
+	case(56):{
+	folder = "20220812_Spatial_resolution_collimator";
+	dataname = "Coincidence_TB_Ch14_Ch26_10mV_Readout_Ch2_Ch3_Pos_4"; // P4 -- metal
+	Chs = {2,3};
+	break;
+	}
+	
+	case(57):{
+	folder = "20220812_Spatial_resolution_collimator";
+	dataname = "Coincidence_TB_Ch14_Ch26_10mV_Readout_Ch2_Ch3_Pos_4_coll2"; // P4 -- plastic
+	Chs = {2,3};
+	break;
+	}
+	
+	// Added a new SiPM -- Ch1/A1/Ch4 and Ch3/H8/Ch5
+	
+	case(58):{
+	folder = "20220824_Spatial_resolution_double";
+	dataname = "Coincidence_TB_Ch14_Ch26_10mV_Readout_Ch2_Ch3_Pos_4"; // P4 -- second SiPMs probably hot 
+	Chs = {2,3,4,5};
+	break;
+	}
 	
 	
+	//After switching the teflon holders -- SiPM1 in Ch4-5 and SiPM2 in CH2-3
+	
+	case(59):{
+	folder = "20220824_Spatial_resolution_double";
+	dataname = "Coincidence_TB_Ch14_Ch26_10mV_Readout_Ch2_Ch3_Pos_4_switched"; // P4 -- second SiPMs probably hot 
+	Chs = {2,3,4,5};
+	break;
+	}
+	
+	//After enlarging the holes - 1mm -- SiPM1 in Ch4-5 and SiPM2 in CH2-3
+	
+	case(60):{
+	folder = "20220824_Spatial_resolution_double";
+	dataname = "Coincidence_TB_Ch14_Ch26_10mV_Readout_Ch2_Ch3_Pos_4_switched_new_holes"; // P4 -- second SiPMs probably hot 
+	Chs = {2,3,4,5};
+	break;
+	}
+	
+	//After exchanging the sipm
+	
+	case(61):{
+	folder = "20220824_Spatial_resolution_double";
+	dataname = "Coincidence_TB_Ch14_Ch26_10mV_Readout_Ch2_Ch3_Pos_4_switched_SiPM"; // P4 -- second SiPMs probably hot 
+	Chs = {2,3,4,5};
+	break;
+	}
+	
+	//After exchanging PCB
+	
+	case(62):{
+	folder = "20220824_Spatial_resolution_double";
+	dataname = "Coincidence_TB_Ch14_Ch26_10mV_Readout_Ch2_Ch3_Pos_4_switched_PCB"; // P4 -- second SiPMs probably hot 
+	Chs = {2,3,4,5};
+	break;
+	}
+	
+	// same measurement 
 	
 	
+	case(63):{
+	folder = "20220824_Spatial_resolution_double";
+	dataname = "Coincidence_TB_Ch14_Ch26_10mV_Readout_Ch2_Ch3_Pos_4_switched_SiPM_2"; // P4 -- second SiPMs probably hot 
+	Chs = {2,3,4,5};
+	break;
+	}
+	
+	// same measurement but with 57V
+	
+	
+	case(64):{
+	folder = "20220824_Spatial_resolution_double";
+	dataname = "Coincidence_TB_Ch14_Ch26_10mV_Readout_Ch2_Ch3_Ch4_Ch5_Pos_4_switched_SiPM_3_bias_57V"; // P4 -- second SiPMs probably hot 
+	Chs = {2,3,4,5};
+	break;
+	}
+	
+	
+	// same measurement but with switched channle of the wavecatcher Ch2<->Ch4 and Ch3<->Ch5
+	
+	
+	case(65):{
+	folder = "20220824_Spatial_resolution_double";
+	dataname = "Coincidence_TB_Ch14_Ch26_10mV_Readout_Ch2_Ch3_Ch4_Ch5_Pos_4_switched_PCB_4_bias_55V"; // P4 -- second SiPMs probably hot 
+	Chs = {2,3,4,5};
+	break;
+	}
+	
+	
+	// same measurement but with switched wires exchanged  and channels to the wavecatcher: ch2-ch3 - short - new side / ch4-ch5 - long - old side 
+	
+	
+	case(66):{
+	folder = "20220905_Tests";
+	dataname = "Coincidence_TB_Ch14_Ch26_10mV_Readout_Ch2_Ch3_Ch4_Ch5_Pos_4_bias_55V_switched_Readout_cables"; // P4 -- second SiPMs probably hot 
+	Chs = {2,3,4,5};
+	break;
+	}
+	
+	// same measurement but with switched cables: ch2-ch3 - long - old side / ch4-ch5 - short - new side 
+	
+	
+	case(67):{
+	folder = "20220905_Tests";
+	dataname = "Coincidence_TB_Ch14_Ch26_10mV_Readout_Ch2_Ch3_Ch4_Ch5_Pos_4_bias_55V_switched_Readout_just_cables"; // P4 -- second SiPMs probably hot 
+	Chs = {2,3,4,5};
+	break;
+	}
+	
+	// same measurement but with rotated detector: ch4-ch5 - long - old side / ch2-ch3 - short - new side 
+	
+	
+	case(68):{
+	folder = "20220905_Tests";
+	dataname = "Coincidence_TB_Ch14_Ch26_10mV_Readout_Ch2_Ch3_Ch4_Ch5_Pos_4_bias_55V_rotated_detector"; // P4 -- second SiPMs probably hot 
+	Chs = {2,3,4,5};
+	break;
+	}
 	
 	
 	
@@ -436,13 +585,13 @@ void readout(int which) // main
 	
 	// plot all channels
 	if (isDC) {
-		mymeas.PrintChargeSpectrum_pars = { 1e5, 0.3, 0.2, 6., 6., 40., 0 };
+		mymeas.PrintChargeSpectrum_pars = { 1e5, 0.3, 0.2, 6., 6., 50., 0 };
 		mymeas.PrintChargeSpectrum(path_to_folder, dataname, intwindowminus, intwindowplus, findmaxfrom, findmaxto, -20, 150, 200, 5, 150, 99, -1);
 		mymeas.PrintAmplitudeSpectrum(path_to_folder, dataname, 0, 0, findmaxfrom, findmaxto, 0, 20, 200);  //to have the mV in the graph you need to set intwindowminus = intwindowminus 
 	}
 	else {
-		mymeas.PrintChargeSpectrum_pars = { 1e4, 1.5, 0.25, 6., 6., 40, 2 };
-		mymeas.PrintChargeSpectrum(path_to_folder, dataname+ "", intwindowminus, intwindowplus, findmaxfrom, findmaxto, -30, 1200, 200,30,900,2,0);
+		mymeas.PrintChargeSpectrum_pars = { 1e4, 6,.2,10,7,60.,-10. };
+		mymeas.PrintChargeSpectrum(path_to_folder, dataname+ "", intwindowminus, intwindowplus, findmaxfrom, findmaxto, -30, 1500, 200,-20,1000,2,0);
 		//mymeas.PrintChargeSpectrum(path_to_folder, dataname, 0, 0, findmaxfrom, findmaxto, 0, 100, 1000);
 	}
 	// setting a threshold of 999 enables that the threshold is calculated with the gain/2 + pedestial from the fit
