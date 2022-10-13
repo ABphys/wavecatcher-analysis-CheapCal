@@ -526,7 +526,218 @@ void readout(int which) // main
 	}
 	
 	
+	//same 
 	
+	case(69):{
+	folder = "20220905_Tests";
+	dataname = "Coincidence_TB_Ch14_Ch26_10mV_Readout_Ch2_Ch3_Ch4_Ch5_Pos_4_bias_55V_rotated_detector_2"; // P4 -- second SiPMs probably hot 
+	Chs = {2,3,4,5};
+	break;
+	}
+	
+	//same with 57V
+	
+	case(70):{
+	folder = "20220905_Tests";
+	dataname = "Coincidence_TB_Ch14_Ch26_10mV_Readout_Ch2_Ch3_Ch4_Ch5_Pos_4_bias_57V_rotated_detector"; // P4 -- second SiPMs probably hot 
+	Chs = {2,3,4,5,14,26};
+	break;
+	}
+	
+	//same with 57V -- change cables for trigger and threshold to 5mV
+	
+	case(71):{
+	folder = "20220905_Tests";
+	dataname = "Coincidence_TB_Ch14_Ch26_5mV_Readout_Ch2_Ch4_Ch5_Pos_4_bias_57V_trigger_test"; // P4 -- second SiPMs probably hot 
+	Chs = {2,3,4,5};
+	break;
+	}
+	
+	//same with 55V -- change cables for trigger and threshold to 10mV
+	
+	case(72):{
+	folder = "20220905_Tests";
+	dataname = "Coincidence_TB_Ch14_Ch26_10mV_Readout_Ch2_Ch4_Ch5_Pos_4_bias_55V_trigger_test"; // P4 -- second SiPMs probably hot 
+	Chs = {2,3,4,5,14,26};
+	break;
+	}
+	
+	//NEW MEASUREMENT 4 fibers!
+	
+	case(73):{
+	folder = "20220914_Spatial_resolution_4fibers_S001";
+	dataname = "S001M001"; // on fiber alpha
+	Chs = {0,1,2,3,4,5,6,7};
+	break;
+	}
+	
+	case(74):{
+	folder = "20220914_Spatial_resolution_4fibers_S001";
+	dataname = "S001M002"; // on fiber beta
+	Chs = {0,1,2,3,4,5,6,7};
+	break;
+	}
+	case(75):{
+	folder = "20220914_Spatial_resolution_4fibers_S001";
+	dataname = "S001M003"; // on fiber gamma
+	Chs = {0,1,2,3,4,5,6,7};
+	break;
+	}
+	case(76):{
+	folder = "20220914_Spatial_resolution_4fibers_S001";
+	dataname = "S001M004"; // on fiber delta
+	Chs = {0,1,2,3,4,5,6,7};
+	break;
+	}
+	case(77):{
+	folder = "20220914_Spatial_resolution_4fibers_S001";
+	dataname = "S001M005"; //in the middle of beta and gamma 
+	Chs = {0,1,2,3,4,5,6,7};
+	break;
+	}
+	case(78):{
+	folder = "20220914_Spatial_resolution_4fibers_S001";
+	dataname = "S001M006"; // 1cm from beta
+	Chs = {0,1,2,3,4,5,6,7};
+	break;
+	}
+	//in the middle of beta and gamma 
+	case(79):{
+	folder = "20220914_Spatial_resolution_4fibers_S001";
+	dataname = "S001M007"; // 2cm from beta
+	Chs = {0,1,2,3,4,5,6,7};
+	break;
+	}
+	case(80):{
+	folder = "20220914_Spatial_resolution_4fibers_S001";
+	dataname = "S001M008"; // 3cm from beta
+	Chs = {0,1,2,3,4,5,6,7};
+	break;
+	}
+	case(81):{
+	folder = "20220914_Spatial_resolution_4fibers_S001";
+	dataname = "S001M009"; // 1cm from gamma
+	Chs = {0,1,2,3,4,5,6,7};
+	break;
+	}
+	case(82):{
+	folder = "20220914_Spatial_resolution_4fibers_S001";
+	dataname = "S001M010"; // 2cm from gamma
+	Chs = {0,1,2,3,4,5,6,7};
+	break;
+	}
+	case(83):{
+	folder = "20220914_Spatial_resolution_4fibers_S001";
+	dataname = "S001M011"; // 3cm from gamma
+	Chs = {0,1,2,3,4,5,6,7};
+	break;
+	}
+	case(84):{
+	folder = "20220914_Spatial_resolution_4fibers_S001";
+	dataname = "S001M012"; // between delta and gamma 
+	Chs = {0,1,2,3,4,5,6,7};
+	break;
+	}
+	case(85):{
+	folder = "20220914_Spatial_resolution_4fibers_S001";
+	dataname = "S001M013"; // 0.5cm from delta
+	Chs = {0,1,2,3,4,5,6,7};
+	break;
+	}
+	case(86):{
+	folder = "20220914_Spatial_resolution_4fibers_S001";
+	dataname = "S001M014"; // 0.5cm from alpha 
+	Chs = {0,1,2,3,4,5,6,7};
+	break;
+	}
+	
+	//NEW MEASUREMENT 4 fibers without 2 border reflective foil
+	
+	case(87):{
+	folder = "20220929_Spatial_resolution_4fibers_S002";
+	dataname = "S002M001"; // 
+	Chs = {0,1,2,3,4,5,6,7};
+	break;
+	}
+	
+	case(88):{
+	folder = "20220929_Spatial_resolution_4fibers_S002";
+	dataname = "S002M002"; // on fiber beta
+	Chs = {0,1,2,3,4,5,6,7};
+	break;
+	}
+	case(89):{
+	folder = "20220929_Spatial_resolution_4fibers_S002";
+	dataname = "S002M003"; // on fiber gamma
+	Chs = {0,1,2,3,4,5,6,7};
+	break;
+	}
+	case(90):{
+	folder = "20220929_Spatial_resolution_4fibers_S002";
+	dataname = "S002M004"; // on fiber delta
+	Chs = {0,1,2,3,4,5,6,7};
+	break;
+	}
+	case(91):{
+	folder = "20220929_Spatial_resolution_4fibers_S002";
+	dataname = "S002M005"; //in the middle of beta and gamma 
+	Chs = {0,1,2,3,4,5,6,7};
+	break;
+	}
+	case(92):{
+	folder = "20220929_Spatial_resolution_4fibers_S002";
+	dataname = "S002M006"; // 1cm from beta
+	Chs = {0,1,2,3,4,5,6,7};
+	break;
+	}
+	case(93):{
+	folder = "20220929_Spatial_resolution_4fibers_S002";
+	dataname = "S002M007"; // 2cm from beta
+	Chs = {0,1,2,3,4,5,6,7};
+	break;
+	}
+	case(94):{
+	folder = "20220929_Spatial_resolution_4fibers_S002";
+	dataname = "S002M008"; // 3cm from beta
+	Chs = {0,1,2,3,4,5,6,7};
+	break;
+	}
+	case(95):{
+	folder = "20220929_Spatial_resolution_4fibers_S002";
+	dataname = "S002M009"; // 1cm from gamma
+	Chs = {0,1,2,3,4,5,6,7};
+	break;
+	}
+	case(96):{
+	folder = "20220929_Spatial_resolution_4fibers_S002";
+	dataname = "S002M010"; // 2cm from gamma
+	Chs = {0,1,2,3,4,5,6,7};
+	break;
+	}
+	case(97):{
+	folder = "20220929_Spatial_resolution_4fibers_S002";
+	dataname = "S002M011"; // 3cm from gamma
+	Chs = {0,1,2,3,4,5,6,7};
+	break;
+	}
+	case(98):{
+	folder = "20220929_Spatial_resolution_4fibers_S002";
+	dataname = "S002M012"; // between delta and gamma 
+	Chs = {0,1,2,3,4,5,6,7};
+	break;
+	}
+	case(99):{
+	folder = "20220929_Spatial_resolution_4fibers_S002";
+	dataname = "S002M013"; // 0.5cm from delta
+	Chs = {0,1,2,3,4,5,6,7};
+	break;
+	}
+	case(100):{
+	folder = "20220929_Spatial_resolution_4fibers_S002";
+	dataname = "S002M014"; // 0.5cm from alpha 
+	Chs = {0,1,2,3,4,5,6,7};
+	break;
+	}
     }
 	// the splitting in the path has a reason. It is needed to later save and name the data in a usefull place
 	path_to_folder = path + folder + "/";	
